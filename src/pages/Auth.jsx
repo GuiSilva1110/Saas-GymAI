@@ -11,8 +11,8 @@ export default function Auth() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [captchaToken, setCaptchaToken] = useState(null);
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -29,16 +29,16 @@ export default function Auth() {
         }
 
         const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              name,
-              full_name: name,
-            },
-            captchaToken: captchaToken,
-          },
-        });
+  email,
+  password,
+  options: {
+    data: {
+      name,
+      full_name: name,
+    },
+    captchaToken: captchaToken,
+  },
+});
 
         if (error) throw error;
 
@@ -111,12 +111,10 @@ export default function Auth() {
             <div className="h-12 w-12 rounded-2xl bg-violet-500 flex items-center justify-center">
               <Dumbbell />
             </div>
-
             <div>
               <h2 className="text-2xl font-bold">
                 {mode === "login" ? "Entrar" : "Criar conta"}
               </h2>
-
               <p className="text-sm text-zinc-400">
                 Comece sua evolução agora.
               </p>
@@ -137,10 +135,8 @@ export default function Auth() {
 
           <div className="mb-4">
             <label className="text-sm text-zinc-300">E-mail</label>
-
             <div className="mt-2 flex items-center gap-3 rounded-xl bg-zinc-950 border border-white/10 px-4 py-3 focus-within:border-violet-400">
               <Mail size={18} className="text-zinc-500" />
-
               <input
                 className="w-full bg-transparent outline-none"
                 value={email}
@@ -154,10 +150,8 @@ export default function Auth() {
 
           <div className="mb-6">
             <label className="text-sm text-zinc-300">Senha</label>
-
             <div className="mt-2 flex items-center gap-3 rounded-xl bg-zinc-950 border border-white/10 px-4 py-3 focus-within:border-violet-400">
               <Lock size={18} className="text-zinc-500" />
-
               <input
                 className="w-full bg-transparent outline-none"
                 value={password}
@@ -171,28 +165,26 @@ export default function Auth() {
 
           {mode === "register" && (
             <div className="mb-4">
-              <Turnstile
-                siteKey="0x4AAAAAADiKov9UxFKbPLi5"
-                onSuccess={(token) => {
-                  console.log("CAPTCHA TOKEN:", token);
-                  setCaptchaToken(token);
-                  setMessage("");
-                }}
-                onError={() => {
-                  setCaptchaToken(null);
-                  setMessage("Erro na verificação de segurança.");
-                }}
-                onExpire={() => {
-                  setCaptchaToken(null);
-                }}
-              />
+             <Turnstile
+  siteKey="0x4AAAAAADiKov9UxFKbPLi5"
+  onSuccess={(token) => {
+    console.log("CAPTCHA TOKEN:", token);
+    setCaptchaToken(token);
+    setMessage("");
+  }}
+  onError={() => {
+    setCaptchaToken(null);
+    setMessage("Erro na verificação de segurança.");
+  }}
+  onExpire={() => {
+    setCaptchaToken(null);
+  }}
+/>
             </div>
           )}
 
           {message && (
-            <p className="mb-4 text-sm text-amber-300">
-              {message}
-            </p>
+            <p className="mb-4 text-sm text-amber-300">{message}</p>
           )}
 
           <button
@@ -217,7 +209,6 @@ export default function Auth() {
 
           <p className="mt-6 text-center text-sm text-zinc-400">
             {mode === "login" ? "Ainda não tem conta?" : "Já tem conta?"}{" "}
-
             <button
               type="button"
               onClick={() => {
